@@ -1,12 +1,11 @@
 import React from 'react';
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 import Title from '../Title'
 import { ProductConsumer } from '../../context'
 import CartColumns from './CartColumns'
 import EmptyCart from './EmptyCart'
 import CartList from './CartList'
+import CartTotals from './CartTotals'
 
 const Cart = props => {
   return (
@@ -20,6 +19,7 @@ const Cart = props => {
 		    						<Title name="your" title="cart" />
 		    						<CartColumns />
 		    						<CartList value={value} />
+                                    <CartTotals value={value} />
 	    						</div>
 	    					</React.Fragment> )
     				else

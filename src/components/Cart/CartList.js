@@ -15,6 +15,8 @@ const CartList = ({value}) => {
 				 	removeFromCart={removeFromCart} 
 				 	decreaseCount={decreaseCount} 
 		 		/>
+
+		 	return null	
 		 	})
 		}
 	</div>

@@ -10,18 +10,16 @@ JSON.parse(localStorage.getItem('products')) ?
 localStorage.setItem('products', JSON.stringify(JSON.parse(localStorage.getItem('products')))) :
 localStorage.setItem('products', JSON.stringify(storeProducts))
 
-const cartDefault = []
-JSON.parse(localStorage.getItem('cart')) ? 
-localStorage.setItem('cart', JSON.stringify(JSON.parse(localStorage.getItem('cart')))) : 
-localStorage.setItem('cart', JSON.stringify(cartDefault))
 
 class ProductProvider extends Component {
 	state = {
 		products: [],
 		detailProduct: JSON.parse(localStorage.getItem('detailProduct')),
-		cart: JSON.parse(localStorage.getItem('cart')),
 		modalProduct: {},
-		modalOpen: false
+		modalOpen: false,
+		cartSubtotal: JSON.parse(localStorage.getItem('totals')).subtotal,
+		cartTax: JSON.parse(localStorage.getItem('totals')).tax,
+		cartTotal: JSON.parse(localStorage.getItem('totals')).total
 	}
 	componentDidMount() {  
 		this.setProducts()
@@ -56,6 +54,7 @@ class ProductProvider extends Component {
 			}
 		})
 		this.state.modalProduct && this.setState(() => { return {modalProduct: product}})
+		this.addTotals()
 	}
 	openModal = id => {
 		const product = this.getProduct(id)
@@ -81,11 +80,10 @@ class ProductProvider extends Component {
 		localStorage.setItem('products', JSON.stringify(this.state.products))
 		this.setState(() => {
 				return {
-					cart: JSON.parse(localStorage.getItem('products'))
+					products: JSON.parse(localStorage.getItem('products'))
 				}
 			})
-
-	//	localStorage.setItem('cart', JSON.stringify(this.state.cart))
+		this.addTotals()
 	}
 	removeFromCart = id => {
 		let product = this.getProduct(id)
@@ -93,18 +91,44 @@ class ProductProvider extends Component {
 		product.count = 0 // закончил здесь
 		product.inCart = false
 		localStorage.setItem('products', JSON.stringify(this.state.products))
-		console.log([...this.state.cart].filter(product => product.id !== id))
 		this.setState(() => {
 			return {
-				cart: [...this.state.cart].filter(product => product.id !== id)
+				products: JSON.parse(localStorage.getItem('products'))
 			}
 		})
-		localStorage.setItem('cart', JSON.stringify(this.state.cart))
+		this.addTotals()
 	}
 	clearCart = () => {
-
+		let products = [...this.state.products]
+		products.forEach(product => {
+			product.count = 0
+			product.total = 0
+			product.inCart = false
+		})
+		localStorage.setItem('products', JSON.stringify(products))
+		this.setState(() => {
+			return {
+				products: JSON.parse(localStorage.getItem('products'))
+			}
+		})
+		this.addTotals()
 	}
-
+	addTotals = () => {
+		let subtotal = 0
+		this.state.products.forEach(product => {
+			subtotal += product.total
+		})
+		let tax = parseFloat((subtotal * 0.1).toFixed(2))
+		let total = subtotal + tax
+		localStorage.setItem('totals', JSON.stringify({ subtotal: subtotal, tax: tax, total: total}))
+		this.setState(() => {
+			return {
+				cartSubtotal: JSON.parse(localStorage.getItem('totals')).subtotal,
+				cartTax: JSON.parse(localStorage.getItem('totals')).tax,
+				cartTotal: JSON.parse(localStorage.getItem('totals')).total
+			}
+		})
+	}
 	render() {
 		return (
 			<ProductContext.Provider value={{
