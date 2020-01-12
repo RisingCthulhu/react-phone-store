@@ -19,7 +19,7 @@ const Cart = props => {
 		    						<Title name="your" title="cart" />
 		    						<CartColumns />
 		    						<CartList value={value} />
-                                    <CartTotals value={value} />
+                                    <CartTotals value={value} history={props.history} />
 	    						</div>
 	    					</React.Fragment> )
     				else

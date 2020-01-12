@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const ButtonContainer = styled.button`
 	text-transform: capitalize;
@@ -20,3 +22,12 @@ export const ButtonContainer = styled.button`
 		outline: none;
 	}
 `
+export const GoToStoreButton = props => {
+	return (
+		<Link to="/" className="text-decoration-none">
+			<ButtonContainer className="mx-auto text-capitalize d-block mt-5 px-4 py-2">
+				<span style={{ "fontSize": "1.75rem" }}>go to store</span>
+			</ButtonContainer>
+		</Link>
+	)
+}

@@ -1,6 +1,8 @@
 import React from 'react';
 
-const CartTotals = ({value}) => {
+import PayPalButton from './PayPalButton'
+
+const CartTotals = ({value, history}) => {
   const { cartSubtotal, cartTax, cartTotal, clearCart } = value
   return (
     <React.Fragment>
@@ -19,6 +21,7 @@ const CartTotals = ({value}) => {
 					<h5>
 						total: <span><strong>${cartTotal}</strong></span>
 					</h5>
+					<PayPalButton total={cartTotal} clearCart={clearCart} history={history} />
     			</div>
     		</div>
     	</div>
