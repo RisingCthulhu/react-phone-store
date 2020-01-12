@@ -53,10 +53,9 @@ class ProductProvider extends Component {
 		this.setState(() => {
 			return {
 				products: JSON.parse(localStorage.getItem('products'))
-			} // починить, не реагирует на нажатие, возможно потому что корзина смотрит не на свои объекты, cart, 
-			// а на products. так же возможно нужно часть с обновлением корзины доработать, т.к. удаляет корректно
+			}
 		})
-	//	localStorage.setItem('cart', JSON.stringify(this.state.cart))
+		this.state.modalProduct && this.setState(() => { return {modalProduct: product}})
 	}
 	openModal = id => {
 		const product = this.getProduct(id)
@@ -74,8 +73,7 @@ class ProductProvider extends Component {
 			} 
 		})
 	}
-	decreaseCount = id => { // починить, не реагирует на нажатие, возможно потому что корзина смотрит не на свои 
-		// объекты, cart, а на products. так же возможно нужно часть с обновлением корзины доработать, т.к. удаляет корректно
+	decreaseCount = id => {
 		let product = this.getProduct(id)
 		product.total -= product.price
 		product.count--
