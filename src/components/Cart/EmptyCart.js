@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 
-import { ButtonContainer, GoToStoreButton } from '../Button'
+import { GoToStoreButton } from '../Button'
 
 const EmptyCart = (props) => {
   return (

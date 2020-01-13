@@ -19,7 +19,7 @@ class ProductProvider extends Component {
 		modalOpen: false,
 		cartSubtotal: JSON.parse(localStorage.getItem('totals')).subtotal,
 		cartTax: JSON.parse(localStorage.getItem('totals')).tax,
-		cartTotal: JSON.parse(localStorage.getItem('totals')).total
+		cartTotal: JSON.parse(localStorage.getItem('totals')).totals
 	}
 	componentDidMount() {  
 		this.setProducts()
