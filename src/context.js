@@ -5,21 +5,19 @@ import { storeProducts } from './data.js'
 const ProductContext = React.createContext();
 //Provider
 //Consumer
-	
-JSON.parse(localStorage.getItem('products')) ?   
-localStorage.setItem('products', JSON.stringify(JSON.parse(localStorage.getItem('products')))) :
-localStorage.setItem('products', JSON.stringify(storeProducts))
 
+!JSON.parse(localStorage.getItem('products')) && localStorage.setItem('products', JSON.stringify(storeProducts))   
+!JSON.parse(localStorage.getItem('totals')) && localStorage.setItem('totals', JSON.stringify({ subtotal: 0, tax: 0, total: 0}))
 
 class ProductProvider extends Component {
 	state = {
 		products: [],
-		detailProduct: JSON.parse(localStorage.getItem('detailProduct')),
+		detailProduct: {},
 		modalProduct: {},
 		modalOpen: false,
 		cartSubtotal: JSON.parse(localStorage.getItem('totals')).subtotal,
 		cartTax: JSON.parse(localStorage.getItem('totals')).tax,
-		cartTotal: JSON.parse(localStorage.getItem('totals')).totals
+		cartTotal: JSON.parse(localStorage.getItem('totals')).total
 	}
 	componentDidMount() {  
 		this.setProducts()
